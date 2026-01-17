@@ -1,7 +1,11 @@
 import React from 'react';
 import { Box, Container, Typography } from '@mui/material';
+import missionData from './data/missionData.json';
+import type { Mission } from './types/mission';
 
 function App() {
+  const missions: Mission[] = missionData.missions as Mission[];
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Box
@@ -30,7 +34,9 @@ function App() {
         }}
       >
         <Container>
-          {/* Content will be added in subsequent stages */}
+          <Typography variant="body1">
+            Total missions: {missions.length}
+          </Typography>
         </Container>
       </Box>
     </Box>
