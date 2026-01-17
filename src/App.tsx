@@ -1,17 +1,39 @@
 import React from 'react';
-import Button from '@mui/material/Button';
+import { Box, Container, Typography } from '@mui/material';
 
 function App() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 40 }}>
-      <h1>Welcome to the UI/UX Interview Template</h1>
-      <Button variant="contained" color="primary">
-        Material UI Button
-      </Button>
-      <p style={{ marginTop: 24 }}>
-        Start building your solution here.
-      </p>
-    </div>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <Box
+        component="header"
+        sx={{
+          bgcolor: 'background.paper',
+          borderBottom: 1,
+          borderColor: 'divider',
+          py: 3,
+        }}
+      >
+        <Container>
+          <Typography variant="h1" component="h1">
+            Mission Control
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+            Space Missions Data Explorer
+          </Typography>
+        </Container>
+      </Box>
+      <Box
+        component="main"
+        sx={{
+          flex: 1,
+          py: 4,
+        }}
+      >
+        <Container>
+          {/* Content will be added in subsequent stages */}
+        </Container>
+      </Box>
+    </Box>
   );
 }
 
