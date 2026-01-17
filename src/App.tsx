@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import missionData from './data/missionData.json';
 import type { Mission } from './types/mission';
+import ExplorerPage from './components/ExplorerPage';
 
 function App() {
   const missions: Mission[] = missionData.missions as Mission[];
@@ -30,14 +31,9 @@ function App() {
         component="main"
         sx={{
           flex: 1,
-          py: 4,
         }}
       >
-        <Container>
-          <Typography variant="body1">
-            Total missions: {missions.length}
-          </Typography>
-        </Container>
+        <ExplorerPage missions={missions} />
       </Box>
     </Box>
   );
