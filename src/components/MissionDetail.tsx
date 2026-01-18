@@ -14,6 +14,8 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 import type { Mission } from '../types/mission';
 import { StatusChip } from '../utils/statusUtils';
 import { formatCost, formatCrew } from '../utils/missionUtils';
@@ -27,6 +29,8 @@ interface MissionDetailProps {
   currentIndex: number;
   onPrevious: () => void;
   onNext: () => void;
+  isFavourite: (missionId: string) => boolean;
+  onToggleFavourite: (missionId: string) => void;
 }
 
 function MissionDetail({
@@ -38,6 +42,8 @@ function MissionDetail({
   currentIndex,
   onPrevious,
   onNext,
+  isFavourite,
+  onToggleFavourite,
 }: MissionDetailProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -66,9 +72,18 @@ function MissionDetail({
     <Box sx={{ p: 3, maxWidth: variant === 'desktop' ? 600 : '100%' }}>
       {/* Header with close button */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
-        <Typography variant="h2" component="h1" sx={{ flex: 1, pr: 2 }}>
-          {mission.name}
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flex: 1, pr: 2 }}>
+          <IconButton
+            onClick={() => onToggleFavourite(mission.id)}
+            aria-label={isFavourite(mission.id) ? 'Remove from favourites' : 'Add to favourites'}
+            sx={{ color: isFavourite(mission.id) ? 'warning.main' : 'action.disabled' }}
+          >
+            {isFavourite(mission.id) ? <StarIcon /> : <StarBorderIcon />}
+          </IconButton>
+          <Typography variant="h2" component="h1">
+            {mission.name}
+          </Typography>
+        </Box>
         <IconButton
           ref={closeButtonRef}
           onClick={onClose}

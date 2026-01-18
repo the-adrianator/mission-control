@@ -8,6 +8,7 @@ import ResultsHeader from './ResultsHeader';
 import ActiveFilterChips from './ActiveFilterChips';
 import MissionDetail from './MissionDetail';
 import { useMissions, type FilterState, type SortOption } from '../hooks/useMissions';
+import { useFavourites } from '../hooks/useFavourites';
 import type { Mission } from '../types/mission';
 
 interface ExplorerPageProps {
@@ -21,22 +22,25 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [sortOption, setSortOption] = useState<SortOption>('year-desc');
+  const { favouriteIds, toggleFavourite, isFavourite } = useFavourites();
 
   const [filters, setFilters] = useState<FilterState>({
     agencies: [],
     statuses: [],
     yearRange: DEFAULT_YEAR_RANGE,
     searchQuery: '',
+    favouritesOnly: false,
   });
 
-  const filteredMissions = useMissions(missions, filters, sortOption);
+  const filteredMissions = useMissions(missions, filters, sortOption, favouriteIds);
 
   const activeFilterCount = useMemo(() => {
     return (
       filters.agencies.length +
       filters.statuses.length +
       (filters.yearRange[0] !== DEFAULT_YEAR_RANGE[0] || filters.yearRange[1] !== DEFAULT_YEAR_RANGE[1] ? 1 : 0) +
-      (filters.searchQuery.length > 0 ? 1 : 0)
+      (filters.searchQuery.length > 0 ? 1 : 0) +
+      (filters.favouritesOnly ? 1 : 0)
     );
   }, [filters]);
 
@@ -46,6 +50,7 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
       statuses: [],
       yearRange: DEFAULT_YEAR_RANGE,
       searchQuery: '',
+      favouritesOnly: false,
     });
     setSortOption('year-desc');
   };
@@ -101,11 +106,13 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
               statuses={filters.statuses}
               yearRange={filters.yearRange}
               searchQuery={filters.searchQuery}
+              favouritesOnly={filters.favouritesOnly}
               defaultYearRange={DEFAULT_YEAR_RANGE}
               onAgenciesChange={(agencies) => setFilters({ ...filters, agencies })}
               onStatusesChange={(statuses) => setFilters({ ...filters, statuses })}
               onYearRangeChange={(yearRange) => setFilters({ ...filters, yearRange })}
               onSearchChange={(searchQuery) => setFilters({ ...filters, searchQuery })}
+              onFavouritesOnlyChange={(favouritesOnly) => setFilters({ ...filters, favouritesOnly })}
             />
           </>
         ) : (
@@ -121,11 +128,13 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
               statuses={filters.statuses}
               yearRange={filters.yearRange}
               searchQuery={filters.searchQuery}
+              favouritesOnly={filters.favouritesOnly}
               defaultYearRange={DEFAULT_YEAR_RANGE}
               onAgenciesChange={(agencies) => setFilters({ ...filters, agencies })}
               onStatusesChange={(statuses) => setFilters({ ...filters, statuses })}
               onYearRangeChange={(yearRange) => setFilters({ ...filters, yearRange })}
               onSearchChange={(searchQuery) => setFilters({ ...filters, searchQuery })}
+              onFavouritesOnlyChange={(favouritesOnly) => setFilters({ ...filters, favouritesOnly })}
             />
           </Box>
         )}
@@ -150,17 +159,19 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
               statuses={filters.statuses}
               yearRange={filters.yearRange}
               searchQuery={filters.searchQuery}
+              favouritesOnly={filters.favouritesOnly}
               defaultYearRange={DEFAULT_YEAR_RANGE}
               onRemoveAgency={(agency) => setFilters({ ...filters, agencies: filters.agencies.filter((a) => a !== agency) })}
               onRemoveStatus={(status) => setFilters({ ...filters, statuses: filters.statuses.filter((s) => s !== status) })}
               onClearYearRange={() => setFilters({ ...filters, yearRange: DEFAULT_YEAR_RANGE })}
               onClearSearch={() => setFilters({ ...filters, searchQuery: '' })}
+              onClearFavouritesOnly={() => setFilters({ ...filters, favouritesOnly: false })}
               onClearAll={handleClearAll}
             />
             {isMobile ? (
-              <MissionCards missions={filteredMissions} onMissionClick={handleMissionClick} />
+              <MissionCards missions={filteredMissions} onMissionClick={handleMissionClick} isFavourite={isFavourite} onToggleFavourite={toggleFavourite} />
             ) : (
-              <MissionsTable missions={filteredMissions} onMissionClick={handleMissionClick} />
+              <MissionsTable missions={filteredMissions} onMissionClick={handleMissionClick} isFavourite={isFavourite} onToggleFavourite={toggleFavourite} />
             )}
           </Box>
         </Box>
@@ -174,6 +185,8 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
         currentIndex={selectedMissionIndex}
         onPrevious={handlePrevious}
         onNext={handleNext}
+        isFavourite={isFavourite}
+        onToggleFavourite={toggleFavourite}
       />
     </Container>
   );

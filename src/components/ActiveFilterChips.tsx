@@ -7,11 +7,13 @@ interface ActiveFilterChipsProps {
   statuses: string[];
   yearRange: [number, number];
   searchQuery: string;
+  favouritesOnly: boolean;
   defaultYearRange: [number, number];
   onRemoveAgency: (agency: string) => void;
   onRemoveStatus: (status: string) => void;
   onClearYearRange: () => void;
   onClearSearch: () => void;
+  onClearFavouritesOnly: () => void;
   onClearAll: () => void;
 }
 
@@ -20,15 +22,17 @@ function ActiveFilterChips({
   statuses,
   yearRange,
   searchQuery,
+  favouritesOnly,
   defaultYearRange,
   onRemoveAgency,
   onRemoveStatus,
   onClearYearRange,
   onClearSearch,
+  onClearFavouritesOnly,
   onClearAll,
 }: ActiveFilterChipsProps) {
   const hasYearFilter = yearRange[0] !== defaultYearRange[0] || yearRange[1] !== defaultYearRange[1];
-  const hasAnyFilters = agencies.length > 0 || statuses.length > 0 || hasYearFilter || searchQuery.length > 0;
+  const hasAnyFilters = agencies.length > 0 || statuses.length > 0 || hasYearFilter || searchQuery.length > 0 || favouritesOnly;
 
   if (!hasAnyFilters) {
     return null;
@@ -70,6 +74,14 @@ function ActiveFilterChips({
           <Chip
             label={`Search: "${searchQuery}"`}
             onDelete={onClearSearch}
+            size="small"
+            deleteIcon={<ClearIcon />}
+          />
+        )}
+        {favouritesOnly && (
+          <Chip
+            label="Favourites only"
+            onDelete={onClearFavouritesOnly}
             size="small"
             deleteIcon={<ClearIcon />}
           />

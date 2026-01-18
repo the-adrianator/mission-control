@@ -8,11 +8,17 @@ export interface FilterState {
   statuses: string[];
   yearRange: [number, number];
   searchQuery: string;
+  favouritesOnly: boolean;
 }
 
-export function useMissions(missions: Mission[], filters: FilterState, sortOption: SortOption) {
+export function useMissions(missions: Mission[], filters: FilterState, sortOption: SortOption, favouriteIds: Set<string>) {
   const filteredAndSorted = useMemo(() => {
     let filtered = missions.filter((mission) => {
+      // Favourites filter
+      if (filters.favouritesOnly && !favouriteIds.has(mission.id)) {
+        return false;
+      }
+
       // Agency filter
       if (filters.agencies.length > 0 && !filters.agencies.includes(mission.agency)) {
         return false;
@@ -57,7 +63,7 @@ export function useMissions(missions: Mission[], filters: FilterState, sortOptio
     });
 
     return sorted;
-  }, [missions, filters, sortOption]);
+  }, [missions, filters, sortOption, favouriteIds]);
 
   return filteredAndSorted;
 }

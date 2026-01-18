@@ -5,16 +5,21 @@ import {
   Typography,
   Box,
   Stack,
+  IconButton,
 } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 import type { Mission } from '../types/mission';
 import { StatusChip } from '../utils/statusUtils';
 
 interface MissionCardsProps {
   missions: Mission[];
   onMissionClick: (mission: Mission) => void;
+  isFavourite: (missionId: string) => boolean;
+  onToggleFavourite: (missionId: string) => void;
 }
 
-function MissionCards({ missions, onMissionClick }: MissionCardsProps) {
+function MissionCards({ missions, onMissionClick, isFavourite, onToggleFavourite }: MissionCardsProps) {
   return (
     <Stack spacing={2}>
       {missions.map((mission) => (
@@ -41,9 +46,26 @@ function MissionCards({ missions, onMissionClick }: MissionCardsProps) {
         >
           <CardContent>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1.5 }}>
-              <Typography variant="h3" component="h2">
-                {mission.name}
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, flex: 1 }}>
+                <IconButton
+                  size="small"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleFavourite(mission.id);
+                  }}
+                  aria-label={isFavourite(mission.id) ? 'Remove from favourites' : 'Add to favourites'}
+                  sx={{
+                    color: isFavourite(mission.id) ? 'warning.main' : 'action.disabled',
+                    mt: -1,
+                    ml: -1,
+                  }}
+                >
+                  {isFavourite(mission.id) ? <StarIcon /> : <StarBorderIcon />}
+                </IconButton>
+                <Typography variant="h3" component="h2">
+                  {mission.name}
+                </Typography>
+              </Box>
               <Typography variant="body2" color="text.secondary" sx={{ ml: 2, flexShrink: 0 }}>
                 {mission.year}
               </Typography>

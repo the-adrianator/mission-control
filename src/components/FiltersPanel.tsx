@@ -28,11 +28,13 @@ interface FiltersPanelProps {
   statuses: string[];
   yearRange: [number, number];
   searchQuery: string;
+  favouritesOnly: boolean;
   defaultYearRange: [number, number];
   onAgenciesChange: (agencies: string[]) => void;
   onStatusesChange: (statuses: string[]) => void;
   onYearRangeChange: (range: [number, number]) => void;
   onSearchChange: (query: string) => void;
+  onFavouritesOnlyChange: (favouritesOnly: boolean) => void;
 }
 
 function FiltersPanel({
@@ -43,13 +45,15 @@ function FiltersPanel({
   statuses,
   yearRange,
   searchQuery,
+  favouritesOnly,
   defaultYearRange,
   onAgenciesChange,
   onStatusesChange,
   onYearRangeChange,
   onSearchChange,
+  onFavouritesOnlyChange,
 }: FiltersPanelProps) {
-  const activeFilterCount = agencies.length + statuses.length + (yearRange[0] !== defaultYearRange[0] || yearRange[1] !== defaultYearRange[1] ? 1 : 0) + (searchQuery.length > 0 ? 1 : 0);
+  const activeFilterCount = agencies.length + statuses.length + (yearRange[0] !== defaultYearRange[0] || yearRange[1] !== defaultYearRange[1] ? 1 : 0) + (searchQuery.length > 0 ? 1 : 0) + (favouritesOnly ? 1 : 0);
 
   const handleAgencyToggle = (agency: string) => {
     if (agencies.includes(agency)) {
@@ -82,6 +86,20 @@ function FiltersPanel({
             onChange={(e) => onSearchChange(e.target.value)}
             size="small"
             placeholder="Mission name..."
+          />
+        </FormControl>
+
+        {/* Favourites only filter */}
+        <FormControl component="fieldset">
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={favouritesOnly}
+                onChange={(e) => onFavouritesOnlyChange(e.target.checked)}
+                size="small"
+              />
+            }
+            label="Favourites only"
           />
         </FormControl>
 
