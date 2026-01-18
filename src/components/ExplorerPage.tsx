@@ -6,6 +6,7 @@ import MissionsTable from './MissionsTable';
 import MissionCards from './MissionCards';
 import ResultsHeader from './ResultsHeader';
 import ActiveFilterChips from './ActiveFilterChips';
+import MissionDetail from './MissionDetail';
 import { useMissions, type FilterState, type SortOption } from '../hooks/useMissions';
 import type { Mission } from '../types/mission';
 
@@ -49,9 +50,30 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
     setSortOption('year-desc');
   };
 
+  const [selectedMission, setSelectedMission] = useState<Mission | null>(null);
+  const selectedMissionIndex = useMemo(() => {
+    if (!selectedMission) return -1;
+    return filteredMissions.findIndex((m) => m.id === selectedMission.id);
+  }, [selectedMission, filteredMissions]);
+
   const handleMissionClick = (mission: Mission) => {
-    // Detail view will be implemented in Stage 5
-    console.log('Mission clicked:', mission.name);
+    setSelectedMission(mission);
+  };
+
+  const handleCloseDetail = () => {
+    setSelectedMission(null);
+  };
+
+  const handlePrevious = () => {
+    if (selectedMissionIndex > 0) {
+      setSelectedMission(filteredMissions[selectedMissionIndex - 1]);
+    }
+  };
+
+  const handleNext = () => {
+    if (selectedMissionIndex < filteredMissions.length - 1) {
+      setSelectedMission(filteredMissions[selectedMissionIndex + 1]);
+    }
   };
 
   return (
@@ -143,6 +165,16 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
           </Box>
         </Box>
       </Box>
+      <MissionDetail
+        mission={selectedMission}
+        open={selectedMission !== null}
+        onClose={handleCloseDetail}
+        variant={isMobile ? 'mobile' : 'desktop'}
+        missions={filteredMissions}
+        currentIndex={selectedMissionIndex}
+        onPrevious={handlePrevious}
+        onNext={handleNext}
+      />
     </Container>
   );
 }
