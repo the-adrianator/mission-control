@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Box, Container, Button, useMediaQuery, useTheme } from '@mui/material';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import FiltersPanel from './FiltersPanel';
+import MissionsTable from './MissionsTable';
+import MissionCards from './MissionCards';
 import type { Mission } from '../types/mission';
 
 interface ExplorerPageProps {
@@ -12,6 +14,11 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [filtersOpen, setFiltersOpen] = useState(false);
+
+  const handleMissionClick = (mission: Mission) => {
+    // Detail view will be implemented in Stage 5
+    console.log('Mission clicked:', mission.name);
+  };
 
   return (
     <Container sx={{ py: 4 }}>
@@ -54,8 +61,11 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
               borderRadius: 1,
             }}
           >
-            {/* Results content will be added in Stage 3 */}
-            <Box sx={{ color: 'text.secondary' }}>Results area (placeholder)</Box>
+            {isMobile ? (
+              <MissionCards missions={missions} onMissionClick={handleMissionClick} />
+            ) : (
+              <MissionsTable missions={missions} onMissionClick={handleMissionClick} />
+            )}
           </Box>
         </Box>
       </Box>
