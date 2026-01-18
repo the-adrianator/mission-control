@@ -2,21 +2,21 @@ import { useState, useEffect } from 'react';
 
 const STORAGE_KEY = 'mission-favourites';
 
-export function useFavourites() {
-  const [favouriteIds, setFavouriteIds] = useState<Set<string>>(new Set());
-
-  // Load from localStorage on mount
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const ids = JSON.parse(stored) as string[];
-        setFavouriteIds(new Set(ids));
-      }
-    } catch (error) {
-      console.error('Failed to load favourites from localStorage:', error);
+function loadFavouritesFromStorage(): Set<string> {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const ids = JSON.parse(stored) as string[];
+      return new Set(ids);
     }
-  }, []);
+  } catch (error) {
+    console.error('Failed to load favourites from localStorage:', error);
+  }
+  return new Set();
+}
+
+export function useFavourites() {
+  const [favouriteIds, setFavouriteIds] = useState<Set<string>>(loadFavouritesFromStorage);
 
   // Save to localStorage whenever favourites change
   useEffect(() => {
