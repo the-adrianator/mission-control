@@ -20,6 +20,10 @@ interface MissionCardsProps {
 }
 
 function MissionCards({ missions, onMissionClick, isFavourite, onToggleFavourite }: MissionCardsProps) {
+  if (missions.length === 0) {
+    return null;
+  }
+
   return (
     <Stack spacing={2}>
       {missions.map((mission) => (
@@ -48,7 +52,7 @@ function MissionCards({ missions, onMissionClick, isFavourite, onToggleFavourite
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1.5 }}>
               <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, flex: 1 }}>
                 <IconButton
-                  size="small"
+                  size="medium"
                   onClick={(e) => {
                     e.stopPropagation();
                     onToggleFavourite(mission.id);
@@ -58,6 +62,8 @@ function MissionCards({ missions, onMissionClick, isFavourite, onToggleFavourite
                     color: isFavourite(mission.id) ? 'warning.main' : 'action.disabled',
                     mt: -1,
                     ml: -1,
+                    minWidth: 44,
+                    minHeight: 44,
                   }}
                 >
                   {isFavourite(mission.id) ? <StarIcon /> : <StarBorderIcon />}

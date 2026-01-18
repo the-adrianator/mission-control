@@ -23,6 +23,10 @@ interface MissionsTableProps {
 }
 
 function MissionsTable({ missions, onMissionClick, isFavourite, onToggleFavourite }: MissionsTableProps) {
+  if (missions.length === 0) {
+    return null;
+  }
+
   return (
     <TableContainer component={Paper} elevation={0}>
       <Table sx={{ minWidth: 650 }} aria-label="missions table">
@@ -63,9 +67,13 @@ function MissionsTable({ missions, onMissionClick, isFavourite, onToggleFavourit
                 }}
               >
                 <IconButton
-                  size="small"
+                  size="medium"
                   aria-label={isFavourite(mission.id) ? 'Remove from favourites' : 'Add to favourites'}
-                  sx={{ color: isFavourite(mission.id) ? 'warning.main' : 'action.disabled' }}
+                  sx={{
+                    color: isFavourite(mission.id) ? 'warning.main' : 'action.disabled',
+                    minWidth: 44,
+                    minHeight: 44,
+                  }}
                 >
                   {isFavourite(mission.id) ? <StarIcon /> : <StarBorderIcon />}
                 </IconButton>

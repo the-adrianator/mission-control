@@ -7,6 +7,7 @@ import MissionCards from './MissionCards';
 import ResultsHeader from './ResultsHeader';
 import ActiveFilterChips from './ActiveFilterChips';
 import MissionDetail from './MissionDetail';
+import EmptyState from './EmptyState';
 import { useMissions, type FilterState, type SortOption } from '../hooks/useMissions';
 import { useFavourites } from '../hooks/useFavourites';
 import type { Mission } from '../types/mission';
@@ -168,10 +169,16 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
               onClearFavouritesOnly={() => setFilters({ ...filters, favouritesOnly: false })}
               onClearAll={handleClearAll}
             />
-            {isMobile ? (
-              <MissionCards missions={filteredMissions} onMissionClick={handleMissionClick} isFavourite={isFavourite} onToggleFavourite={toggleFavourite} />
+            {filteredMissions.length === 0 ? (
+              <EmptyState onClearFilters={handleClearAll} isFavouritesOnly={filters.favouritesOnly} />
             ) : (
-              <MissionsTable missions={filteredMissions} onMissionClick={handleMissionClick} isFavourite={isFavourite} onToggleFavourite={toggleFavourite} />
+              <>
+                {isMobile ? (
+                  <MissionCards missions={filteredMissions} onMissionClick={handleMissionClick} isFavourite={isFavourite} onToggleFavourite={toggleFavourite} />
+                ) : (
+                  <MissionsTable missions={filteredMissions} onMissionClick={handleMissionClick} isFavourite={isFavourite} onToggleFavourite={toggleFavourite} />
+                )}
+              </>
             )}
           </Box>
         </Box>
