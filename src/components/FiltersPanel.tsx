@@ -53,6 +53,7 @@ function FiltersPanel({
   onSearchChange,
   onFavouritesOnlyChange,
 }: FiltersPanelProps) {
+  // Count active filters for badge (year range counts as 1 if modified from default)
   const activeFilterCount = agencies.length + statuses.length + (yearRange[0] !== defaultYearRange[0] || yearRange[1] !== defaultYearRange[1] ? 1 : 0) + (searchQuery.length > 0 ? 1 : 0) + (favouritesOnly ? 1 : 0);
 
   const handleAgencyToggle = (agency: string) => {
@@ -72,12 +73,12 @@ function FiltersPanel({
   };
 
   const content = (
-    <Box sx={{ p: 3 }}>
+    <Box sx={{ p: 1 }}>
       <Typography variant="h3" component="h2" sx={{ mb: 3 }}>
         Filters
       </Typography>
 
-      <Stack spacing={4}>
+      <Stack spacing={3.5}>
         {/* Search */}
         <FormControl>
           <TextField
@@ -86,6 +87,7 @@ function FiltersPanel({
             onChange={(e) => onSearchChange(e.target.value)}
             size="small"
             placeholder="Mission name..."
+            fullWidth
           />
         </FormControl>
 
@@ -144,8 +146,9 @@ function FiltersPanel({
         </FormControl>
 
         {/* Year range filter */}
-        <FormControl>
-          <FormLabel component="legend" sx={{ mb: 2 }}>
+        {/* Horizontal padding provides space for slider thumb at edges */}
+        <FormControl sx={{ px: 2 }}>
+          <FormLabel component="legend" sx={{ mb: 2, fontWeight: 500 }}>
             Year Range: {yearRange[0]} - {yearRange[1]}
           </FormLabel>
           <Slider
@@ -158,6 +161,20 @@ function FiltersPanel({
               { value: defaultYearRange[0], label: defaultYearRange[0].toString() },
               { value: defaultYearRange[1], label: defaultYearRange[1].toString() },
             ]}
+            sx={{
+              '& .MuiSlider-thumb': {
+                transition: 'all 0.2s ease-in-out',
+                '&:hover': {
+                  boxShadow: '0 0 0 8px rgba(26, 77, 140, 0.16)',
+                },
+              },
+              '& .MuiSlider-track': {
+                height: 4,
+              },
+              '& .MuiSlider-rail': {
+                height: 4,
+              },
+            }}
           />
         </FormControl>
       </Stack>
@@ -188,8 +205,11 @@ function FiltersPanel({
     <Box
       sx={{
         bgcolor: 'background.paper',
-        borderRadius: 1,
-        p: 3,
+        borderRadius: 2,
+        p: 2,
+        border: '1px solid',
+        borderColor: 'divider',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
       }}
     >
       {content}

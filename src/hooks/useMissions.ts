@@ -13,28 +13,24 @@ export interface FilterState {
 
 export function useMissions(missions: Mission[], filters: FilterState, sortOption: SortOption, favouriteIds: Set<string>) {
   const filteredAndSorted = useMemo(() => {
+    // All filters combine with AND logic (mission must match all active filters)
     let filtered = missions.filter((mission) => {
-      // Favourites filter
       if (filters.favouritesOnly && !favouriteIds.has(mission.id)) {
         return false;
       }
 
-      // Agency filter
       if (filters.agencies.length > 0 && !filters.agencies.includes(mission.agency)) {
         return false;
       }
 
-      // Status filter
       if (filters.statuses.length > 0 && !filters.statuses.includes(mission.status)) {
         return false;
       }
 
-      // Year range filter
       if (mission.year < filters.yearRange[0] || mission.year > filters.yearRange[1]) {
         return false;
       }
 
-      // Search filter
       if (filters.searchQuery && !mission.name.toLowerCase().includes(filters.searchQuery.toLowerCase())) {
         return false;
       }
@@ -42,7 +38,6 @@ export function useMissions(missions: Mission[], filters: FilterState, sortOptio
       return true;
     });
 
-    // Sorting
     const sorted = [...filtered].sort((a, b) => {
       switch (sortOption) {
         case 'year-desc':
@@ -54,7 +49,7 @@ export function useMissions(missions: Mission[], filters: FilterState, sortOptio
         case 'name-desc':
           return b.name.localeCompare(a.name);
         case 'cost-desc':
-          return (b.cost ?? 0) - (a.cost ?? 0);
+          return (b.cost ?? 0) - (a.cost ?? 0); // Handle missing cost field
         case 'cost-asc':
           return (a.cost ?? 0) - (b.cost ?? 0);
         default:

@@ -16,6 +16,7 @@ interface ExplorerPageProps {
   missions: Mission[];
 }
 
+// Default year range covering all missions in dataset
 const DEFAULT_YEAR_RANGE: [number, number] = [1961, 2028];
 
 function ExplorerPage({ missions }: ExplorerPageProps) {
@@ -35,6 +36,7 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
 
   const filteredMissions = useMissions(missions, filters, sortOption, favouriteIds);
 
+  // Count active filters for badge display (year range counts as 1 if modified)
   const activeFilterCount = useMemo(() => {
     return (
       filters.agencies.length +
@@ -45,6 +47,7 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
     );
   }, [filters]);
 
+  // Reset all filters and sort to default state
   const handleClearAll = () => {
     setFilters({
       agencies: [],
@@ -57,6 +60,7 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
   };
 
   const [selectedMission, setSelectedMission] = useState<Mission | null>(null);
+  // Returns -1 if selected mission is not in current filtered results
   const selectedMissionIndex = useMemo(() => {
     if (!selectedMission) return -1;
     return filteredMissions.findIndex((m) => m.id === selectedMission.id);
@@ -145,8 +149,9 @@ function ExplorerPage({ missions }: ExplorerPageProps) {
           <Box
             sx={{
               bgcolor: 'background.paper',
-              p: 3,
-              borderRadius: 1,
+              p: { xs: 2, md: 4 }, // Reduced padding on mobile for better space utilisation
+              borderRadius: 2,
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.06)',
             }}
           >
             <ResultsHeader

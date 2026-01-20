@@ -31,6 +31,7 @@ function ActiveFilterChips({
   onClearFavouritesOnly,
   onClearAll,
 }: ActiveFilterChipsProps) {
+  // Year filter is active if range differs from default (not just if both ends match)
   const hasYearFilter = yearRange[0] !== defaultYearRange[0] || yearRange[1] !== defaultYearRange[1];
   const hasAnyFilters = agencies.length > 0 || statuses.length > 0 || hasYearFilter || searchQuery.length > 0 || favouritesOnly;
 
@@ -39,9 +40,9 @@ function ActiveFilterChips({
   }
 
   return (
-    <Box sx={{ mb: 2 }}>
-      <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', alignItems: 'center', gap: 1 }}>
-        <Typography variant="body2" color="text.secondary" sx={{ mr: 1 }}>
+    <Box sx={{ mb: 3 }}>
+      <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', alignItems: 'center', gap: 1.5 }}>
+        <Typography variant="body2" color="text.secondary" sx={{ mr: 0.5, fontWeight: 500 }}>
           Active filters:
         </Typography>
         {agencies.map((agency) => (
@@ -50,7 +51,14 @@ function ActiveFilterChips({
             label={`Agency: ${agency}`}
             onDelete={() => onRemoveAgency(agency)}
             size="small"
-            deleteIcon={<ClearIcon />}
+            deleteIcon={<ClearIcon fontSize="small" />}
+            sx={{
+              fontWeight: 500,
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                bgcolor: 'action.selected',
+              },
+            }}
           />
         ))}
         {statuses.map((status) => (
@@ -59,7 +67,14 @@ function ActiveFilterChips({
             label={`Status: ${status}`}
             onDelete={() => onRemoveStatus(status)}
             size="small"
-            deleteIcon={<ClearIcon />}
+            deleteIcon={<ClearIcon fontSize="small" />}
+            sx={{
+              fontWeight: 500,
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                bgcolor: 'action.selected',
+              },
+            }}
           />
         ))}
         {hasYearFilter && (
@@ -67,7 +82,14 @@ function ActiveFilterChips({
             label={`Year: ${yearRange[0]}-${yearRange[1]}`}
             onDelete={onClearYearRange}
             size="small"
-            deleteIcon={<ClearIcon />}
+            deleteIcon={<ClearIcon fontSize="small" />}
+            sx={{
+              fontWeight: 500,
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                bgcolor: 'action.selected',
+              },
+            }}
           />
         )}
         {searchQuery && (
@@ -75,7 +97,14 @@ function ActiveFilterChips({
             label={`Search: "${searchQuery}"`}
             onDelete={onClearSearch}
             size="small"
-            deleteIcon={<ClearIcon />}
+            deleteIcon={<ClearIcon fontSize="small" />}
+            sx={{
+              fontWeight: 500,
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                bgcolor: 'action.selected',
+              },
+            }}
           />
         )}
         {favouritesOnly && (
@@ -83,14 +112,29 @@ function ActiveFilterChips({
             label="Favourites only"
             onDelete={onClearFavouritesOnly}
             size="small"
-            deleteIcon={<ClearIcon />}
+            deleteIcon={<ClearIcon fontSize="small" />}
+            sx={{
+              fontWeight: 500,
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                bgcolor: 'action.selected',
+              },
+            }}
           />
         )}
         <Button
           size="small"
           onClick={onClearAll}
           startIcon={<ClearIcon />}
-          sx={{ ml: 'auto' }}
+          sx={{
+            ml: 'auto',
+            textTransform: 'none',
+            fontWeight: 500,
+            transition: 'all 0.2s ease-in-out',
+            '&:hover': {
+              bgcolor: 'action.hover',
+            },
+          }}
         >
           Clear all
         </Button>

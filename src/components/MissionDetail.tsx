@@ -47,9 +47,10 @@ function MissionDetail({
 }: MissionDetailProps) {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
+  // Focus management: move focus to close button when drawer/dialog opens
   useEffect(() => {
     if (open && closeButtonRef.current) {
-      // Small delay to ensure drawer/dialog is fully rendered
+      // Small delay ensures drawer/dialog is fully rendered before focusing
       setTimeout(() => {
         closeButtonRef.current?.focus();
       }, 100);
@@ -143,7 +144,7 @@ function MissionDetail({
         <Typography variant="body1">{formatCost(mission.cost)}</Typography>
       </Box>
 
-      {/* Navigation */}
+      {/* Navigation: moves through filtered/sorted results, not all missions */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 4, pt: 3, borderTop: 1, borderColor: 'divider' }}>
         <Button
           startIcon={<ArrowBackIcon />}

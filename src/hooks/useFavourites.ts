@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 const STORAGE_KEY = 'mission-favourites';
 
+// Synchronously load favourites on initial render to avoid timing issues
 function loadFavouritesFromStorage(): Set<string> {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -16,9 +17,9 @@ function loadFavouritesFromStorage(): Set<string> {
 }
 
 export function useFavourites() {
+  // Function initialiser ensures synchronous load, preventing save effect from overwriting data
   const [favouriteIds, setFavouriteIds] = useState<Set<string>>(loadFavouritesFromStorage);
 
-  // Save to localStorage whenever favourites change
   useEffect(() => {
     try {
       const idsArray = Array.from(favouriteIds);

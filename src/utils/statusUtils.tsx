@@ -40,6 +40,12 @@ export function StatusChip({ status }: { status: Mission['status'] }) {
       label={status}
       color={getStatusColor(status)}
       size="small"
+      sx={{
+        fontWeight: 500,
+        '& .MuiChip-icon': {
+          fontSize: '1rem',
+        },
+      }}
     />
   );
 }

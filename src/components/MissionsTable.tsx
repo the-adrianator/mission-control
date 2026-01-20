@@ -32,23 +32,34 @@ function MissionsTable({ missions, onMissionClick, isFavourite, onToggleFavourit
       <Table sx={{ minWidth: 650 }} aria-label="missions table">
         <TableHead>
           <TableRow>
-            <TableCell width={50}></TableCell>
-            <TableCell>Mission Name</TableCell>
-            <TableCell align="right">Year</TableCell>
-            <TableCell>Agency</TableCell>
-            <TableCell>Status</TableCell>
-            <TableCell>Type</TableCell>
+            <TableCell width={50} sx={{ py: 1.5 }}></TableCell>
+            <TableCell sx={{ py: 1.5, fontWeight: 600, fontSize: '0.875rem', color: 'text.primary' }}>
+              Mission Name
+            </TableCell>
+            <TableCell align="right" sx={{ py: 1.5, fontWeight: 600, fontSize: '0.875rem', color: 'text.primary' }}>
+              Year
+            </TableCell>
+            <TableCell sx={{ py: 1.5, fontWeight: 600, fontSize: '0.875rem', color: 'text.primary' }}>Agency</TableCell>
+            <TableCell sx={{ py: 1.5, fontWeight: 600, fontSize: '0.875rem', color: 'text.primary' }}>Status</TableCell>
+            <TableCell sx={{ py: 1.5, fontWeight: 600, fontSize: '0.875rem', color: 'text.primary' }}>Type</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {missions.map((mission) => (
+          {missions.map((mission, index) => (
             <TableRow
               key={mission.id}
               onClick={() => onMissionClick(mission)}
               sx={{
                 cursor: 'pointer',
+                transition: 'background-color 0.2s ease-in-out',
+                bgcolor: index % 2 === 0 ? 'background.paper' : 'rgba(0, 0, 0, 0.02)', // Zebra striping for scanability
                 '&:hover': {
                   bgcolor: 'action.hover',
+                },
+                '&:focus-visible': {
+                  outline: '2px solid',
+                  outlineColor: 'primary.main',
+                  outlineOffset: -2,
                 },
               }}
               tabIndex={0}
@@ -73,22 +84,27 @@ function MissionsTable({ missions, onMissionClick, isFavourite, onToggleFavourit
                     color: isFavourite(mission.id) ? 'warning.main' : 'action.disabled',
                     minWidth: 44,
                     minHeight: 44,
+                    transition: 'transform 0.2s ease-in-out, color 0.2s ease-in-out',
+                    '&:hover': {
+                      transform: 'scale(1.1)',
+                      color: isFavourite(mission.id) ? 'warning.dark' : 'warning.light',
+                    },
                   }}
                 >
                   {isFavourite(mission.id) ? <StarIcon /> : <StarBorderIcon />}
                 </IconButton>
               </TableCell>
-              <TableCell component="th" scope="row">
-                <Typography variant="body2" sx={{ fontWeight: 500 }}>
+              <TableCell component="th" scope="row" sx={{ py: 2 }}>
+                <Typography variant="body2" sx={{ fontWeight: 600, color: 'text.primary' }}>
                   {mission.name}
                 </Typography>
               </TableCell>
-              <TableCell align="right">{mission.year}</TableCell>
-              <TableCell>{mission.agency}</TableCell>
-              <TableCell>
+              <TableCell align="right" sx={{ py: 2 }}>{mission.year}</TableCell>
+              <TableCell sx={{ py: 2 }}>{mission.agency}</TableCell>
+              <TableCell sx={{ py: 2 }}>
                 <StatusChip status={mission.status} />
               </TableCell>
-              <TableCell>{mission.missionType}</TableCell>
+              <TableCell sx={{ py: 2 }}>{mission.missionType}</TableCell>
             </TableRow>
           ))}
         </TableBody>

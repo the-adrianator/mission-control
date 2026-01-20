@@ -15,14 +15,15 @@ function App() {
           bgcolor: 'background.paper',
           borderBottom: 1,
           borderColor: 'divider',
-          py: 3,
+          py: 4,
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
         }}
       >
         <Container>
-          <Typography variant="h1" component="h1">
+          <Typography variant="h1" component="h1" sx={{ mb: 0.5 }}>
             Mission Control
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.9375rem' }}>
             Space Missions Data Explorer
           </Typography>
         </Container>
