@@ -29,6 +29,14 @@ A responsive, accessible data exploration application for browsing space mission
 
 The application is deployed and available at: **[https://mission-control-data-explorer.netlify.app/](https://mission-control-data-explorer.netlify.app/)**
 
+## Screenshots
+
+![Desktop View](src/screenshots/desktop_view.png)
+
+![Mobile View](src/screenshots/mobile_view.png)
+
+![Key Interactions](src/screenshots/key_interaction.png)
+
 ## Design Decisions
 
 ### Layout Choice
@@ -53,7 +61,7 @@ Next/Previous navigation within the detail view respects the current filtered an
 
 The breakpoint at 960px (MUI's `md`) separates mobile from desktop experiences. On mobile, touch targets are at least 44px to meet accessibility guidelines, and the filter drawer provides a comfortable full-screen experience for complex filtering interactions.
 
-Cards use optimised spacing with reduced padding (p: 2) on mobile for better information density. The card layout features a clean hierarchy: mission name and star icon on the first row, year displayed below with a dash prefix and right alignment, and metadata (Agency, Type, Status) organised in a two-column layout with dividers. The favourite toggle uses smaller icons (size="small") appropriate for thumb interaction. The table layout would be cramped on mobile, so cards provide better information density and readability.
+Cards use optimised spacing with reduced padding (p: 2) on mobile for better information density. The card layout features a clean hierarchy: mission name and star icon on the first row, with metadata (Agency, Type, Status, Year) organised in a two-column layout with dividers. Year is displayed in bold on the right side, opposite Status, within the metadata section. The favourite toggle uses smaller icons (size="small") appropriate for thumb interaction. The table layout would be cramped on mobile, so cards provide better information density and readability.
 
 ### Accessibility Considerations
 

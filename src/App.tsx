@@ -17,7 +17,7 @@ function App() {
           borderColor: 'divider',
           py: 4,
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
-          background: 'linear-gradient(to right, rgba(26, 77, 140, 0.03), rgba(26, 77, 140, 0.01), transparent)',
+          backgroundImage: 'linear-gradient(to right, rgba(26, 77, 140, 0.03), rgba(26, 77, 140, 0.01), transparent)',
         }}
       >
         <Container>

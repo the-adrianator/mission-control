@@ -95,17 +95,6 @@ function MissionCards({ missions, onMissionClick, isFavourite, onToggleFavourite
                   {mission.name}
                 </Typography>
               </Box>
-              {/* Year displayed below title with dash prefix for visual hierarchy */}
-              <Typography
-                variant="body2"
-                sx={{
-                  color: 'text.secondary',
-                  fontWeight: 400,
-                  textAlign: 'right',
-                }}
-              >
-                - {mission.year}
-              </Typography>
             </Box>
 
             {/* Metadata: Agency, Status, Type */}
@@ -129,11 +118,21 @@ function MissionCards({ missions, onMissionClick, isFavourite, onToggleFavourite
                 </Box>
               </Box>
 
-              <Box>
-                <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 500, display: 'block', mb: 1 }}>
-                  Status
-                </Typography>
-                <StatusChip status={mission.status} />
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Box>
+                  <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 500, display: 'block', mb: 1 }}>
+                    Status
+                  </Typography>
+                  <StatusChip status={mission.status} />
+                </Box>
+                <Box sx={{ textAlign: 'right' }}>
+                  <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 500, display: 'block', mb: 0.5 }}>
+                    Year
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                    {mission.year}
+                  </Typography>
+                </Box>
               </Box>
             </Stack>
           </CardContent>
