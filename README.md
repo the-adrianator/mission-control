@@ -25,6 +25,10 @@ A responsive, accessible data exploration application for browsing space mission
    npm test
    ```
 
+## Live Demo
+
+The application is deployed and available at: **[https://mission-control-data-explorer.netlify.app/](https://mission-control-data-explorer.netlify.app/)**
+
 ## Design Decisions
 
 ### Layout Choice
@@ -75,7 +79,7 @@ Typography follows MUI's scale with enhanced hierarchy: headings use refined fon
 
 Spacing uses the 8px base unit throughout, with responsive padding adjustments on mobile (reduced container padding) to optimise screen real estate. Border radius is consistently 8px (2 units) for a modern, cohesive feel.
 
-Visual depth is created through subtle shadows (boxShadow on containers, cards, and panels), elevation on interactive elements, and careful layering. The filter panel uses a border and shadow to clearly separate it from content, while the results container has elevated styling.
+Visual depth is created through subtle shadows (boxShadow on containers, cards, and panels), elevation on interactive elements, and careful layering. The header features a very subtle gradient using the space-themed primary colour, adding depth while maintaining readability. The header title and subtitle are centre-aligned for a balanced, prominent presentation. The filter panel uses a border and shadow to clearly separate it from content, while the results container has elevated styling.
 
 Micro-interactions enhance the user experience: hover states include smooth transitions (0.2s ease-in-out), favourite star buttons scale on hover, table rows have smooth background transitions, and cards lift slightly on hover. All interactive elements provide clear visual feedback.
 

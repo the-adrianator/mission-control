@@ -17,15 +17,18 @@ function App() {
           borderColor: 'divider',
           py: 4,
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+          background: 'linear-gradient(to right, rgba(26, 77, 140, 0.03), rgba(26, 77, 140, 0.01), transparent)',
         }}
       >
         <Container>
-          <Typography variant="h1" component="h1" sx={{ mb: 0.5 }}>
-            Mission Control
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.9375rem' }}>
-            Space Missions Data Explorer
-          </Typography>
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography variant="h1" component="h1" sx={{ mb: 0.5 }}>
+              Mission Control
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.9375rem' }}>
+              Space Missions Data Explorer
+            </Typography>
+          </Box>
         </Container>
       </Box>
       <Box
